@@ -55,7 +55,7 @@ Features
 Demo
 ----
 
-A demo app (with profiling enabled for anyone) is at [http://gae-java-mini-profiler.appspot.com/]().
+A demo app (with profiling enabled for anyone) is at [http://gae-java-mini-profiler.appspot.com/](http://gae-java-mini-profiler.appspot.com/).
 
 <img src="http://gae-java-mini-profiler.appspot.com/images/screenshot-1.png" alt="Example Screenshot" style="max-width: 480px;">
 
