@@ -1,0 +1,106 @@
+<link rel="stylesheet" type="text/css" href="@@baseURL@@resource?id=mini_profiler.css">
+<script type="text/javascript">
+if(!window.jQuery) {
+  document.write(unescape('%3Cscript type="text/javascript" src="@@baseURL@@resource?id=jquery-1.6.2.min.js"%3E%3C/script%3E'));
+  document.write(unescape('%3Cscript type="text/javascript" src="@@baseURL@@resource?id=jquery.tmpl.min.js"%3E%3C/script%3E'));
+}
+if(window.jQuery && !window.jQuery.tmpl) {
+  document.write(unescape('%3Cscript type="text/javascript" src="@@baseURL@@resource?id=jquery.tmpl.min.js"%3E%3C/script%3E'));
+}
+</script>
+<script type="text/javascript" src="@@baseURL@@resource?id=mini_profiler.js"></script>
+<script type="text/javascript">
+jQuery(function() {
+  MiniProfiler.init({
+    requestId: '@@requestId@@',
+    baseURL: '@@baseURL@@'
+  });
+});
+</script>
+<script type="text/html" id="@@prefix@@-request-tmpl">
+<div class="${type}" title="${type}"><a href="#" id="@@prefix@@-req-${requestId}">${totalTime} ms</div>
+</script>
+<script type="text/html" id="@@prefix@@-result-tree-tmpl">
+ <li>
+ {{if children.length}}
+ <div class="name" style="padding-left: ${depth * 18 + 5}px">
+ <a href="#" class="expand" id="@@prefix@@-req-profile-${id}">${name}</a> 
+ {{else}}
+ <div class="name" style="padding-left: ${depth * 18 + 23}px">
+ ${name}
+ {{/if}}
+ </div><div class="time">${(duration / 1000000).toFixed(2)}
+ </div><div class="time">${(self / 1000000).toFixed(2)} 
+ </div><div class="time">${(offset / 1000000).toFixed(2)}</div>
+ {{if children.length}}
+ <ul id="@@prefix@@-req-profile-${id}-d" style="display: none;">
+ {{each children}}
+  {{tmpl($value) "resultTreeTemplate"}}
+ {{/each}}
+ </ul>
+ {{/if}}
+ </li>
+</script>
+<script type="text/html" id="@@prefix@@-result-tmpl">
+<div id="@@prefix@@-req-header">
+ <div id="@@prefix@@-req-url">${requestURL}</div>
+ <div id="@@prefix@@-req-close"><a href="#">[X]</a></div> 
+ <div id="@@prefix@@-req-time">${timestampFormatted}</div> 
+</div>
+<div id="@@prefix@@-req-profile">
+ <h2>Profile</h2>
+ <div id="@@prefix@@-req-profile-table">
+   <div id="@@prefix@@-req-profile-header"><div class="name">Step
+   </div><div class="time">Duration (ms)
+   </div><div class="time">Self (ms)
+   </div><div class="time">Offset (ms)</div></div>
+   <ul>{{tmpl(profile) "resultTreeTemplate"}}</ul>
+ </div>
+</div>
+{{if appstats && (appstats.rpcStats || appstats.rpcCalls)}}
+<div id="@@prefix@@-req-as">
+ <h2>Appstats</h2>
+ {{if appstats.rpcStats}}
+ <h3>RPC Stats</h3>
+ <table>
+  <thead>
+   <tr><th width="66%">RPC</th><th width="17%"># of Calls</th><th width="17%">Total Time (ms)</th></tr>
+  </thead>
+  <tbody>
+   {{each(i, rpc) appstats.rpcStats}}
+   <tr><td width="66%">${i}</td><td width="17%">${rpc.totalCalls}</td><td width="17%">${rpc.totalTime}</td></tr>
+   {{/each}}
+  </tbody>
+ </table> 
+ {{/if}}
+ {{if appstats.rpcCalls}}
+ <h3>RPC Calls</h3>
+ <table>
+  <thead>
+   <tr><th width="66%">Call</th><th width="17%">Duration (ms)</th><th width="17%">Offset (ms)</th></tr>
+  </thead>
+  <tbody>
+   {{each(i, call) appstats.rpcCalls}}
+   <tr>
+    <td width="66%"><div><a href="#" class="expand" id="@@prefix@@-req-as-rpc-${i}">${call.serviceCallName}</a></div>
+        <div id="@@prefix@@-req-as-rpc-${i}-d" class="stack" style="display: none;">
+        <strong>Call Stack</strong><br><br>
+        {{each(i, frame) call.callStack}}{{= frame}}<br>{{/each}}
+        {{if call.request}}
+        <br><strong>Request</strong><br><br>
+        ${call.request}
+        {{/if}}
+        {{if call.response}}
+        <strong>Response</strong><br><br>
+        ${call.response}
+        {{/if}}
+        </div>        
+    </td><td width="17%">${call.totalTime}</td><td width="17%">${call.startOffset}</td></tr>
+   {{/each}}
+  </tbody>
+ </table> 
+ {{/if}} 
+</div>
+{{/if}}
+</div>
+</script>
