@@ -18,6 +18,7 @@
   font: inherit;
   vertical-align: baseline;
   background: transparent;
+  color: inherit;
 }
 #@@prefix@@ ol, #@@prefix@@ ul, #@@prefix@@-req ol, #@@prefix@@-req ul {
   list-style: none;
