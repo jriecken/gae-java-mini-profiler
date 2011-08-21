@@ -143,7 +143,7 @@ did not run for this request.  E.g.
       ${mini_profile_includes}
     </head> 
     
-If you are already including jQuery and/org jQuery Templates on your page, this include needs to happen _after_.  If jQuery or jQuery Templates are not already included on the page, they will be.
+If you are already including jQuery and/or jQuery Templates on your page, this include needs to happen _after_ them.  If jQuery or jQuery Templates are not already included on the page, they will be.
     
 ### Start up your app!
     
