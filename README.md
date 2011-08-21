@@ -125,7 +125,7 @@ _Filter Parameters_
   <tr><th width="25%">Parameter</th><th width="75%">Description</th>
  </thead>
  <tbody>
-  <tr><td><code>servletURL</code></td><td>The base URL that the servlet is mapped to.  This <strong>MUST</strong> match the URL in the <code>&ltservlet-mapping&gt;</code> specified for the <code>MiniProfilerServlet</code>.  The default is <code>/gae_mini_profile/</code>.</td></tr>
+  <tr><td><code>servletURL</code></td><td>The base URL that the servlet is mapped to.  This <strong>MUST</strong> match the URL in the <code>&lt;servlet-mapping&gt;</code> specified for the <code>MiniProfilerServlet</code>.  The default is <code>/gae_mini_profile/</code>.</td></tr>
   <tr><td><code>restrictToAdmins</code></td><td>Whether to restrict profiling to app admins.  The default is false.</td></tr>
   <tr><td><code>restrictToEmails</code></td><td>Comma-delimited list of emails of app users to restrict profiling to.  The default is no restriction.</td></tr>
   <tr><td><code>restrictToURLs</code></td><td>Comma-delimited list of regular expressions of URL patterns that profiling should be done on.  This can be used to further limit the scope of the filter mapping specified in the <code>web.xml</code>. The default is no restriction.</td></tr>
