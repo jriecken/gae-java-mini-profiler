@@ -1,8 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<groupId>ca.jimr</groupId>
 	<artifactId>gae-mini-profiler</artifactId>
 	<version>2.0.0</version>
+	<name>Google App Engine Profiler for Java</name>
+	<description>A mini profiler for the Google App Engine Java runtime (inspired by the Python gae_mini_profiler at https://github.com/kamens/gae_mini_profiler and the MVC Mini Profiler at http://code.google.com/p/mvc-mini-profiler/)</description>
+	<url>https://github.com/jriecken/gae-java-mini-profiler</url>
 	<packaging>jar</packaging>
 	<inceptionYear>2011</inceptionYear>
 	<licenses>
@@ -12,7 +16,10 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	<name>Google App Engine Profiler for Java</name>
+	<scm>
+		<url>https://github.com/jriecken/gae-java-mini-profiler</url>
+		<connection>https://github.com/jriecken/gae-java-mini-profiler.git</connection>
+	</scm>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -120,10 +127,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	<description>A mini profiler for the Google App Engine Java runtime (inspired by the Python gae_mini_profiler at https://github.com/kamens/gae_mini_profiler and the MVC Mini Profiler at http://code.google.com/p/mvc-mini-profiler/)</description>
-	<url>https://github.com/jriecken/gae-java-mini-profiler</url>
-	<scm>
-		<url>https://github.com/jriecken/gae-java-mini-profiler</url>
-		<connection>https://github.com/jriecken/gae-java-mini-profiler.git</connection>
-	</scm>
 </project>
