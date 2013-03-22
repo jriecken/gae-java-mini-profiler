@@ -3,10 +3,22 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ca.jimr</groupId>
 	<artifactId>gae-mini-profiler</artifactId>
-	<version>2.0.0</version>
+	<version>1.1.0</version>
 	<name>Google App Engine Profiler for Java</name>
 	<description>A mini profiler for the Google App Engine Java runtime (inspired by the Python gae_mini_profiler at https://github.com/kamens/gae_mini_profiler and the MVC Mini Profiler at http://code.google.com/p/mvc-mini-profiler/)</description>
 	<url>https://github.com/jriecken/gae-java-mini-profiler</url>
+	<developers>
+		<developer>
+			<id>jriecken</id>
+			<name>Jakub Holy</name>
+			<email></email>
+		</developer>
+		<developer>
+			<id>antonytrupe</id>
+			<name>Antony Trupe</name>
+			<email>antonytrupe@gmail.com</email>
+		</developer>
+	</developers>
 	<packaging>jar</packaging>
 	<inceptionYear>2011</inceptionYear>
 	<licenses>
@@ -70,8 +82,13 @@
 		<repository>
 			<id>nexus-releases</id>
 			<name>Nexus Release Repository</name>
-			<url>http://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
 		</repository>
+		<snapshotRepository>
+			<id>nexus-releases</id>
+			<name>Nexus Release Repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
 	</distributionManagement>
 
 	<build>
@@ -90,6 +107,36 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<!-- Publish javadocs when releasing - required by Sonatype -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.8</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-source</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
