@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Gae-java-mini-profiler : A mini-profiler for the Google App Engine Java runtime" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Gae-java-mini-profiler</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/jriecken/gae-java-mini-profiler">View on GitHub</a>
+
+          <h1 id="project_title">Gae-java-mini-profiler</h1>
+          <h2 id="project_tagline">A mini-profiler for the Google App Engine Java runtime</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/jriecken/gae-java-mini-profiler/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/jriecken/gae-java-mini-profiler/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>Google App Engine Mini Profiler for Java</h1>
+
+<ul>
+<li><a href="#features">Features</a></li>
+<li><a href="#demo">Demo</a></li>
+<li>
+<a href="#getting-started">Getting Started</a>
+
+<ul>
+<li><a href="#dependencies">Dependencies</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#configuration">Configuration</a></li>
+</ul>
+</li>
+<li><a href="#instrumenting-code">Instrumenting your code</a></li>
+</ul><h2>About</h2>
+
+<p>This is a "mini profiler" for the Google App Engine Java runtime.</p>
+
+<p>It's heavily inspired by</p>
+
+<ul>
+<li>
+<a href="http://code.google.com/p/mvc-mini-profiler">mvc-mini-profiler</a> - .NET Mini Profiler that started it all.</li>
+<li>
+<a href="https://github.com/kamens/gae_mini_profiler">gae_mini_profiler</a> - Python Mini Profiler for the Google App Engine Python runtime.</li>
+</ul><p>It's released under the <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a> license.</p>
+
+<p><a name="features"></a></p>
+
+<h2>Features</h2>
+
+<ul>
+<li>
+<p>Live profiling of any request <em>in production</em>:</p>
+
+<ul>
+<li>Provides a basic Java profiler used to explicitly profile sections of your code.<br>
+</li>
+<li>Captures <a href="http://code.google.com/appengine/docs/java/tools/appstats.html">Appstats</a> data if the <code>AppstatsFilter</code> is running.</li>
+</ul>
+</li>
+<li><p>Capture of profiles for requests that redirected to the current request as well as any <code>XMLHttpRequests</code> that happen after the page loads <em>as they happen</em>.</p></li>
+<li>
+<p>Granular control over when profiling happens and who can see the results:</p>
+
+<ul>
+<li>Limit to a subset of URLs,</li>
+<li>Limit to app administrators,</li>
+<li>Limit to certain app users (by email),</li>
+<li>Any combination of the above.</li>
+</ul>
+</li>
+<li>
+<p>Simple configuration:</p>
+
+<ul>
+<li>A single <code>.jar</code> file (and a dependency on the <a href="http://jackson.codehaus.org/">Jackson</a> JSON library).</li>
+<li>A new <code>&lt;servlet&gt;</code> and <code>&lt;filter&gt;</code> in your <code>web.xml</code> file.</li>
+<li>An include in the <code>&lt;head&gt;</code> of your page template.</li>
+</ul>
+</li>
+</ul><p><a name="demo"></a></p>
+
+<h2>Demo</h2>
+
+<p>A demo app (with profiling enabled for anyone) is at <a href="http://gae-java-mini-profiler.appspot.com/">http://gae-java-mini-profiler.appspot.com/</a>.</p>
+
+<p><img src="http://gae-java-mini-profiler.appspot.com/images/screenshot-1.png" alt="Example Screenshot"></p>
+
+<p><a name="getting-started"></a></p>
+
+<h2>Getting Started</h2>
+
+<p><a name="dependencies"></a></p>
+
+<h3>Dependencies</h3>
+
+<ul>
+<li>
+<code>appengine-api-1.0-sdk</code> (you should already have this in your project)</li>
+<li>
+<code>appengine-api-labs</code> (you should already have this in your project)</li>
+<li>
+<code>servlet-api</code> (you should already have this in your project)</li>
+<li><code>jackson-core-asl</code></li>
+<li><code>jackson-mapper-asl</code></li>
+</ul><p><a name="installation"></a></p>
+
+<h3>Installation</h3>
+
+<p>Clone the source from here and build it using <a href="http://maven.apache.org/">maven</a>.</p>
+
+<p>Then copy the <code>gae-mini-profiler-1.0.0.jar</code> file (and the two Jackson jars) to your <code>WEB-INF/lib</code> folder.</p>
+
+<p><a name="configuration"></a></p>
+
+<h3>Configuration</h3>
+
+<p>Add the <code>ca.jimr.gae.profiler.MiniProfilerServlet</code> and <code>ca.jimr.gae.profiler.MiniProfilerFilter</code> to your <code>web.xml</code>.</p>
+
+<pre><code>&lt;servlet&gt;
+  &lt;servlet-name&gt;miniprofiler&lt;/servlet-name&gt;
+  &lt;servlet-class&gt;ca.jimr.gae.profiler.MiniProfilerServlet&lt;/servlet-class&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+  &lt;servlet-name&gt;miniprofiler&lt;/servlet-name&gt;
+  &lt;url-pattern&gt;/gae_mini_profile/*&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+&lt;filter&gt;
+  &lt;filter-name&gt;miniprofiler-filter&lt;/filter-name&gt;
+  &lt;filter-class&gt;ca.jimr.gae.profiler.MiniProfilerFilter&lt;/filter-class&gt;
+&lt;/filter&gt;
+&lt;filter-mapping&gt;
+  &lt;filter-name&gt;miniprofiler-filter&lt;/filter-name&gt;
+  &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;
+</code></pre>
+
+<p>Note: The <code>MiniProfilerFilter</code> <strong>MUST</strong> be before the <code>AppstatsFilter</code> if you want to have Appstats show up.</p>
+
+<p>There are a bunch of <code>initParameter</code> params you can set to configure the profiler:</p>
+
+<p><strong>Servlet Parameters</strong></p>
+
+<table border="1" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<th width="25%">Parameter</th>
+<th width="75%">Description</th>
+</tr>
+<tr>
+<td><code>maxStackFrames</code></td>
+<td>The maximum number of stack frames to show in the Appstats stack traces.  The default is to show all of them.</td>
+</tr>
+<tr>
+<td><code>htmlIdPrefix</code></td>
+<td>Prefix to use for HTML ids generated by the profiler.  This <strong>MUST</strong> match the <code>htmlIdPrefix</code> in the filter definition. The default is <code>"mp"</code>.</td>
+</tr>
+<tr>
+<td><code>resourceCacheHours</code></td>
+<td>Number of hours to cache the static resources generated by the profiler in the browser.  The default is not to cache at all (0 hours).</td>
+</tr>
+</table><p><em>Filter Parameters</em></p>
+
+<table border="1" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<th width="25%">Parameter</th>
+<th width="75%">Description</th>
+ </tr>
+<tr>
+<td><code>servletURL</code></td>
+<td>The base URL that the servlet is mapped to.  This <strong>MUST</strong> match the URL in the <code>&lt;servlet-mapping&gt;</code> specified for the <code>MiniProfilerServlet</code>.  The default is <code>/gae_mini_profile/</code>.</td>
+</tr>
+<tr>
+<td><code>restrictToAdmins</code></td>
+<td>Whether to restrict profiling to app admins.  The default is false.</td>
+</tr>
+<tr>
+<td><code>restrictToEmails</code></td>
+<td>Comma-delimited list of emails of app users to restrict profiling to.  The default is no restriction.</td>
+</tr>
+<tr>
+<td><code>restrictToURLs</code></td>
+<td>Comma-delimited list of regular expressions of URL patterns that profiling should be done on.  This can be used to further limit the scope of the filter mapping specified in the <code>web.xml</code>. The default is no restriction.</td>
+</tr>
+<tr>
+<td><code>dataExpiry</code></td>
+<td>How many seconds to keep profile data around in Memcache.  The default is 30 seconds.</td>
+</tr>
+<tr>
+<td><code>htmlIdPrefix</code></td>
+<td>Prefix to use for HTML ids generated by the profiler.  This <strong>MUST</strong> match the <code>htmlIdPrefix</code> in the servlet definition. The default is <code>"mp"</code>.</td>
+</tr>
+</table><p>At the bottom of the <code>&lt;head&gt;</code> in your page (usually in whatever global template you are using), you must output
+the contents of the <code>mini_profile_includes</code> request attribute.  This attribute will be <code>null</code> if the profiler
+did not run for this request.  E.g.</p>
+
+<pre><code>&lt;head&gt;
+  &lt;!-- Other Stuff would go here --&gt;
+  ${mini_profile_includes}
+&lt;/head&gt; 
+</code></pre>
+
+<p>If you are already including jQuery and/or jQuery Templates on your page, this include needs to happen <em>after</em> them.  If jQuery or jQuery Templates are not already included on the page, they will be.</p>
+
+<h3>Start up your app!</h3>
+
+<p>And that's it.  When you run your application, depending on what restrictions you have set, you will see profiling stats showing
+up in the left-hand corner of the page.</p>
+
+<p><a name="instrumenting-code"></a></p>
+
+<h2>Instrumenting your code</h2>
+
+<p>Odds are you will want more than just the elapsed time for the entire request.</p>
+
+<p>You can use the <code>MiniProfiler</code> class to record execution times for sections of your code.</p>
+
+<p>The main method to call is <code>MiniProfiler.step( String stepName )</code>.  This will start a new profiling step, and return an object that
+you can later call the <code>close()</code> method on to finish the step. These steps can be nested to create a tree-structure.</p>
+
+<p>If the profiler is inactive, the steps won't do anything.</p>
+
+<pre><code>Step step1 = MiniProfiler.step("Big things happening");
+try
+{
+  Step step2 = MiniProfiler.step("Sub-Step 1");
+  try
+  {
+    // Do some work
+  }
+  finally
+  {
+    step2.close();
+  }
+  Step step3 = MiniProfiler.step("Sub-Step 2");
+  try
+  {
+    // Do some work
+  }
+  finally
+  {
+    step3.close();
+  }
+}
+finally
+{
+  step.close();
+}
+</code></pre>
+
+<p>This will show up in the profiler UI as something like (different numbers obviously):</p>
+
+<pre><code>Name                        Duration (ms)   Self (ms)   Offset (ms)
+-------------------------------------------------------------------
+Request                     100.00          10.00       0 
+  Big things happening      90.00           15.00       10.00
+    Sub-Step 1              35.00           35.00       15.00
+    Sub-Step 2              40.00           40.00       50.00        
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Gae-java-mini-profiler maintained by <a href="https://github.com/jriecken">jriecken</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
