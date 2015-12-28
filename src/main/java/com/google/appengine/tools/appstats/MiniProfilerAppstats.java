@@ -49,7 +49,14 @@ public class MiniProfilerAppstats
   {
     Map<String, Object> appstatsMap = null;
     MemcacheWriter writer = new MemcacheWriter(null, MemcacheServiceFactory.getMemcacheService("__appstats__"));
-    StatsProtos.RequestStatProto appstats = writer.getFull(Long.parseLong(appstatsId));
+    StatsProtos.RequestStatProto appstats;
+    try
+    {
+      appstats = writer.getFull(Long.parseLong(appstatsId));
+    } catch (NumberFormatException e)
+    {
+      return appstatsMap;
+    }
     if (appstats != null)
     {
       appstatsMap = new HashMap<String, Object>();
