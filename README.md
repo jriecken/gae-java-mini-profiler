@@ -77,6 +77,13 @@ Getting Started
 
 Clone the source from here and build it using [maven](http://maven.apache.org/).
 
+`mvn clean install`
+
+Requirements to Build
+ - Set JAVA_HOME environment variable
+ - Install gnupg (A guide can be found [here](http://blog.ghostinthemachines.com/2015/03/01/how-to-use-gpg-command-line/))
+ - If you get the following error "Inappropriate ioctl for device" try the following to fix the problem `export GPG_TTY=$(tty)`
+
 Then copy the `gae-mini-profiler-1.0.0.jar` file (and the two Jackson jars) to your `WEB-INF/lib` folder.
 
 <a name="configuration"></a>
