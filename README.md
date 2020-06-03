@@ -1,3 +1,5 @@
+**NOTE: This library is not maintained anymore.**
+
 Google App Engine Mini Profiler for Java
 ====================================
 
